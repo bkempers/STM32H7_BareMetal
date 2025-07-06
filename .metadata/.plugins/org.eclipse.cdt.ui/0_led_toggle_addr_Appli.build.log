@@ -1,0 +1,17 @@
+07:17:02 **** Incremental Build of configuration Debug for project 0_led_toggle_addr_Appli ****
+make -j9 all 
+arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m7 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32H7SINGLE -DSTM32H7S3L8Hx -DSTM32H7 -c -I../Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Src/main.o"
+arm-none-eabi-gcc -o "0_led_toggle_addr_Appli.elf" @"objects.list"   -mcpu=cortex-m7 -T"/Users/benkempers/Developer/STM32CubeIDE/STM32H7_BareMetal/0_led_toggle_addr/Appli/STM32H7S3L8HX_FLASH.ld" --specs=nosys.specs -Wl,-Map="0_led_toggle_addr_Appli.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: 0_led_toggle_addr_Appli.elf
+ 
+arm-none-eabi-size  0_led_toggle_addr_Appli.elf 
+arm-none-eabi-objdump -h -S 0_led_toggle_addr_Appli.elf  > "0_led_toggle_addr_Appli.list"
+   text	   data	    bss	    dec	    hex	filename
+   1164	      0	   1564	   2728	    aa8	0_led_toggle_addr_Appli.elf
+Finished building: default.size.stdout
+ 
+Finished building: 0_led_toggle_addr_Appli.list
+ 
+
+07:17:02 Build Finished. 0 errors, 0 warnings. (took 465ms)
+

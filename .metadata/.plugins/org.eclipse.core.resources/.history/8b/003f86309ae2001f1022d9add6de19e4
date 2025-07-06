@@ -1,0 +1,185 @@
+//led pin mapping
+// LD1 (green): PD10
+// LD2 (yellow): PD13
+// LD3 (red): PB7
+
+#include <stdint.h>
+
+#define PERIPHERAL_BASE       (0x40000000UL)
+#define AHB4_PERIPH_OFFSET    (0x18020000UL)
+#define AHB4_PERIPH_BASE      (PERIPHERAL_BASE + AHB4_PERIPH_OFFSET)
+
+#define GPIOA_OFFSET          (0x0000UL)
+#define GPIOA_BASE            (AHB4_PERIPH_BASE + GPIOA_OFFSET)
+
+#define GPIOB_OFFSET          (0x0400UL)
+#define GPIOB_BASE            (AHB4_PERIPH_BASE + GPIOB_OFFSET)
+
+#define GPIOC_OFFSET          (0x0800UL)
+
+#define GPIOD_OFFSET          (0x0C00UL)
+#define GPIOD_BASE            (AHB4_PERIPH_BASE + GPIOD_OFFSET)
+
+#define RCC_OFFSET            (0x4400UL)
+#define RCC_BASE              (AHB4_PERIPH_BASE + RCC_OFFSET)
+
+#define AHB4EN_R_OFFSET       (0x140UL)
+#define RCC_AHB4EN_R          (* (volatile unsigned int *)(RCC_BASE + AHB4EN_R_OFFSET))
+
+#define GPIO_MODER_OFFSET     (0x00UL)
+#define GPIO_A_MODE_R         (* (volatile unsigned int *)(GPIOA_BASE + GPIO_MODER_OFFSET))
+#define GPIO_B_MODE_R         (* (volatile unsigned int *)(GPIOB_BASE + GPIO_MODER_OFFSET))
+#define GPIO_D_MODE_R         (* (volatile unsigned int *)(GPIOD_BASE + GPIO_MODER_OFFSET))
+
+#define GPIO_ODR_OFFSET       (0x14UL)
+#define GPIO_A_OD_R           (* (volatile unsigned int *)(GPIOA_BASE + GPIO_ODR_OFFSET))
+#define GPIO_B_OD_R           (* (volatile unsigned int *)(GPIOB_BASE + GPIO_ODR_OFFSET))
+#define GPIO_D_OD_R           (* (volatile unsigned int *)(GPIOD_BASE + GPIO_ODR_OFFSET))
+
+#define GPIOAEN               (1U<<0)
+#define GPIOBEN               (1U<<1)
+#define GPIOCEN               (1U<<2)
+#define GPIODEN               (1U<<3)
+
+#define PIN5                  (1U<<5)
+#define PIN7                  (1U<<7)
+#define PIN10                 (1U<<10)
+#define PIN13                 (1U<<13)
+
+#define LED1_PIN              (PIN10) //PD10
+#define LED2_PIN              (PIN13) //PD13
+#define LED3_PIN              (PIN7) //PB7
+
+
+#define __IO volatile
+
+typedef struct
+{
+	__IO uint32_t CR;			/**!< RCC source control register,								Address offset: 0x00 */
+	__IO uint32_t HSICFGR;		/**!< RCC HSI calibration register,								Address offset: 0x04 */
+	__IO uint32_t CRRCR;		/**!< RCC clock recovery RC register,							Address offset: 0x08 */
+	__IO uint32_t CSICFGR;		/**!< RCC CSI calibration register,								Address offset: 0x0C */
+	__IO uint32_t CFGR;			/**!< RCC clock configuration register,							Address offset: 0x10 */
+	uint32_t RESERVED0;			/**!< Reserved, 0x14 */
+	__IO uint32_t CDCFGR;		/**!< RCC CPU domain clock configuration register,				Address offset: 0x18 */
+	__IO uint32_t APBCFGR;		/**!< RCC APB clocks configuration register,					Address offset: 0x20 */
+	uint32_t RESERVED1;			/**!< Reserved, 0x24 */
+	__IO uint32_t PLLCKSELR;	/**!< RCC PLLs clock source selection register,					Address offset: 0x28 */
+	__IO uint32_t PLLCFGR;		/**!< RCC PLLs configuration register,							Address offset: 0x2C */
+	__IO uint32_t PLL1DIVR1;	/**!< RCC PLL1 dividers configuration register 1,				Address offset: 0x30 */
+	__IO uint32_t PLL1FRACR;	/**!< RCC PLL1 fractional divider register,						Address offset: 0x34 */
+	__IO uint32_t PLL2DIVR1;	/**!< RCC PLL2 dividers configuration register 1,				Address offset: 0x38 */
+	__IO uint32_t PLL2FRACR;	/**!< RCC PLL2 fractional divider register,						Address offset: 0x3C */
+	__IO uint32_t PLL3DIVR1;	/**!< RCC PLL3 dividers configuration register 1,				Address offset: 0x40 */
+	__IO uint32_t PLL3FRACR;	/**!< RCC PLL3 fractional divider register,						Address offset: 0x44 */
+	uint32_t RESERVED2;			/**!< Reserved, 0x48 */
+	__IO uint32_t CCIPR1;		/**!< RCC ABH peripheral kernel clock selection register,		Address offset: 0x4C */
+	__IO uint32_t CCIPR2;		/**!< RCC APB1 peripherals kernel clock selection register,		Address offset: 0x50 */
+	__IO uint32_t CCIPR3;		/**!< RCC APB2 peripherals kernel clock selection register,		Address offset: 0x54 */
+	__IO uint32_t CCIPR4;		/**!< RCC APB4,5 peripherals kernel clock selection register,	Address offset: 0x58 */
+	uint32_t RESERVED3;			/**!< Reserved, 0x5C */
+	__IO uint32_t CIER;			/**!< RCC clock source interrupt enable register,				Address offset: 0x60 */
+	__IO uint32_t CIFR;			/**!< RCC clock source interrupt flag register,					Address offset: 0x64 */
+	__IO uint32_t CICR;			/**!< RCC clock source interrupt clear register,				Address offset: 0x68 */
+	uint32_t RESERVED4;			/**!< Reserved, 0x6C */
+	__IO uint32_t BDCR;			/**!< RCC backup domain control register,						Address offset: 0x70 */
+	__IO uint32_t CSR;			/**!< RCC clock control and status register,					Address offset: 0x74 */
+	uint32_t RESERVED5;			/**!< Reserved, 0x78 */
+	__IO uint32_t AHB5RSTR;		/**!< RCC AHB5 peripheral reset register,						Address offset: 0x7C */
+	__IO uint32_t AHB1RSTR;		/**!< RCC AHB1 peripheral reset register,						Address offset: 0x80 */
+	__IO uint32_t AHB2RSTR;		/**!< RCC AHB2 peripheral reset register,						Address offset: 0x84 */
+	__IO uint32_t AHB4RSTR;		/**!< RCC AHB4 peripheral reset register,						Address offset: 0x88 */
+	__IO uint32_t APB5RSTR;		/**!< RCC APB5 peripheral reset register,						Address offset: 0x8C */
+	__IO uint32_t APB1RSTR1;	/**!< RCC APB1 peripheral reset register 1,						Address offset: 0x90 */
+	__IO uint32_t APB1RSTR2;	/**!< RCC APB1 peripheral reset register 2,						Address offset: 0x94 */
+	__IO uint32_t APB2RSTR;		/**!< RCC APB2 peripheral reset register,						Address offset: 0x98 */
+	__IO uint32_t APB4RSTR;		/**!< RCC APB4 peripheral reset register,						Address offset: 0x9C */
+
+	__IO uint32_t AHB3RSTR;		/**!< RCC AHB3 peripheral reset register,						Address offset: 0xA4 */
+
+	__IO uint32_t CKGDISR;		/**!< RCC AXI clocks gating disable register,					Address offset: 0xB0 */
+
+	__IO uint32_t PLL1DIVR2;	/**!< RCC PLL1 dividers configuration register 2,			Address offset: 0xC0 */
+	__IO uint32_t PLL2DIVR2;	/**!< RCC PLL2 dividers configuration register 2,			Address offset: 0xC4 */
+	__IO uint32_t PLL3DIVR2;	/**!< RCC PLL3 dividers configuration register 3,			Address offset: 0xC8 */
+	__IO uint32_t PLL1SSCGR;	/**!< RCC PLL1 spread spectrum clock generator register,	Address offset: 0xCC */
+	__IO uint32_t PLL2SSCGR;	/**!< RCC PLL2 spread spectrum clock generator register,	Address offset: 0xD0 */
+	__IO uint32_t PLL3SSCGR;	/**!< RCC PLL3 spread spectrum clock generator register,	Address offset: 0xD4 */
+
+	__IO uint32_t CKPROTR;	/**!< RCC clock protection register,								Address offset: 0x100 */
+
+	__IO uint32_t RSR;			/**!< RCC reset status register,									Address offset: 0x130 */
+	__IO uint32_t AHB5ENR;		/**!< RCC AHB5 clock enable register,								Address offset: 0x134 */
+	__IO uint32_t AHB1ENR;		/**!< RCC AHB1 clock enable register,								Address offset: 0x138 */
+	__IO uint32_t AHB2ENR;		/**!< RCC AHB2 clock enable register,								Address offset: 0x13C */
+	__IO uint32_t AHB4ENR;		/**!< RCC AHB4 clock enable register,								Address offset: 0x140 */
+	__IO uint32_t APB5ENR;		/**!< RCC APB5 clock enable register,								Address offset: 0x144 */
+	__IO uint32_t APB1ENR1;		/**!< RCC APB1 clock enable register 1,								Address offset: 0x148 */
+	__IO uint32_t APB1ENR2;		/**!< RCC APB1 clock enable register 2,								Address offset: 0x14C */
+	__IO uint32_t APB2ENR;		/**!< RCC APB2 clock enable register,								Address offset: 0x150 */
+	__IO uint32_t APB4ENR;		/**!< RCC APB4 clock enable register,								Address offset: 0x154 */
+	__IO uint32_t AHB3ENR;		/**!< RCC AHB3 clock enable register,								Address offset: 0x158 */
+	__IO uint32_t AHB5LPENR;	/**!< RCC AHB5 low-power clock enable register,						Address offset: 0x15C */
+	__IO uint32_t AHB1LPENR;	/**!< RCC AHB1 low-power clock enable register,						Address offset: 0x160 */
+	__IO uint32_t AHB2LPENR;	/**!< RCC AHB2 low-power clock enable register,						Address offset: 0x164 */
+	__IO uint32_t AHB4LPENR;	/**!< RCC AHB4 low-power clock enable register,						Address offset: 0x168 */
+	__IO uint32_t AHB3LPENR;	/**!< RCC AHB3 low-power clock enable register,						Address offset: 0x16C */
+	__IO uint32_t APB1LPENR1;	/**!< RCC APB1 low-power clock enable register 1,					Address offset: 0x170 */
+	__IO uint32_t APB1LPENR2;	/**!< RCC APB1 low-power clock enable register 2,					Address offset: 0x174 */
+	__IO uint32_t APB2LPENR;	/**!< RCC APB2 low-power clock enable register,						Address offset: 0x178 */
+	__IO uint32_t APB4LPENR;	/**!< RCC APB4 low-power clock enable register,						Address offset: 0x17C */
+	__IO uint32_t APB5LPENR;	/**!< RCC APB5 low-power clock enable register,						Address offset: 0x17C */
+
+	__IO uint32_t ;	/**!< ,					Address offset: 0x00 */
+} RCC_typdef;
+
+typedef struct
+{
+	__IO uint32_t MODER;	/**!< GPIO port mode register,					Address offset: 0x00 */
+	__IO uint32_t OTYPER;	/**!< GPIO port output type register,			Address offset: 0x04 */
+	__IO uint32_t OSPEEDR; 	/**!< GPIO port output speed register, 			Address offset: 0x08 */
+	__IO uint32_t PURDR; 	/**!< GPIO port pull-up/pull-down register,		Address offset: 0x0C */
+	__IO uint32_t IDR; 		/**!< GPIO port input data register, 			Address offset: 0x10 */
+	__IO uint32_t ODR; 		/**!< GPIO port output data register, 			Address offset: 0x14 */
+	__IO uint32_t BSSR; 	/**!< GPIO port bit set/reset register, 		Address offset: 0x18 */
+	__IO uint32_t LCKR; 	/**!< GPIO port configuration lock register, 	Address offset: 0x1C */
+	__IO uint32_t AFRL; 	/**!< GPIO alternate function low register, 	Address offset: 0x20 */
+	__IO uint32_t AFRH; 	/**!< GPIO alternate function high register, 	Address offset: 0x24 */
+	__IO uint32_t BRR; 		/**!< GPIO port bit reset register, 			Address offset: 0x28 */
+
+} GPIO_typdef;
+
+int main()
+{
+	/* enable clock access for gpio */
+	RCC_AHB4EN_R |= GPIOBEN;
+	RCC_AHB4EN_R |= GPIODEN;
+
+	/* set PDN as output pin */
+	//PB7
+	GPIO_B_MODE_R |= (1U<<14); //set bit 20 to 1
+	GPIO_B_MODE_R &=~ (1U<<15); //set bit 21 to 0
+
+	//PD10
+	GPIO_D_MODE_R |= (1U<<20); //set bit 20 to 1
+	GPIO_D_MODE_R &=~ (1U<<21); //set bit 21 to 0
+
+	//PD13
+	GPIO_D_MODE_R |= (1U<<26); //set bit 20 to 1
+	GPIO_D_MODE_R &=~ (1U<<27); //set bit 21 to 0
+
+	while(1)
+	{
+		/* toggle pin high/low */
+		GPIO_B_OD_R ^= LED3_PIN;
+		for(int i =0; i<1000000; i++) {}
+
+		GPIO_D_OD_R ^= LED2_PIN;
+		for(int i =0; i<1000000; i++) {}
+
+		GPIO_D_OD_R ^= LED1_PIN;
+		for(int i =0; i<1000000; i++) {}
+	}
+
+	return 1;
+}
