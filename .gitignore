@@ -1,5 +1,11 @@
 .DS_Store
 .metadata
+.cyclo
+.o
+.su
+.elf
+.list
+.map
 
 stm32h7s3l8.pdf
 nucleo-h7s3l8.pdf
