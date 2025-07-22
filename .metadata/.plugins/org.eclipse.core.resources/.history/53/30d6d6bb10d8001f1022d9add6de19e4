@@ -1,6 +1,0 @@
-//led pin mapping
-// LD1 (green): PD10 or PA5
-// LD2 (yellow): PD13
-// LD3 (red): PB7
-
-#define PERIPHERAL_BASE (0x40000000UL)

@@ -1,8 +1,0 @@
-LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/arch=x86_64
-LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/name=Local
-LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/os=macosx
-configDescList=org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:bare_metal_Appli
-eclipse.preferences.version=1
-org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:0_led_toggle_addr_Appli\ Debug/activeLaunchMode=run
-org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:0_led_toggle_addr_Appli\ Debug/activeLaunchTarget=null\:---
-org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:bare_metal_Appli/activeLaunchMode=run

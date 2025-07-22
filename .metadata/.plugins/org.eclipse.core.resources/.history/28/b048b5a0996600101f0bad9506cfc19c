@@ -1,7 +1,0 @@
-#define STM32H7S3xx
-#include "stm32h7rsxx.h"
-
-int main(void)
-{
-
-}
