@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Rename resource &apos;bare_metal/Appli/Inc/stm32h7xx.h&apos; to &apos;stm32h7rsxx.h&apos;" description="Rename resource &apos;stm32h7xx.h&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="Appli/Inc/stm32h7xx.h" name="stm32h7rsxx.h" stamp="1753146668893" updateReferences="true"/>&#x0A;<refactoring comment="Rename resource &apos;bare_metal/Appli/Inc/core_m7.h&apos; to &apos;core_cm7.h&apos;" description="Rename resource &apos;core_m7.h&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="Appli/Inc/core_m7.h" name="core_cm7.h" stamp="1753147463176" updateReferences="true"/>
+</session>
