@@ -33,34 +33,34 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := bare_metal_Appli
+BUILD_ARTIFACT_NAME := bare_metal_Boot
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-bare_metal_Appli.elf \
+bare_metal_Boot.elf \
 
 MAP_FILES += \
-bare_metal_Appli.map \
+bare_metal_Boot.map \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-bare_metal_Appli.list \
+bare_metal_Boot.list \
 
 
 # All Target
 all: main-build
 
 # Main-build Target
-main-build: bare_metal_Appli.elf secondary-outputs
+main-build: bare_metal_Boot.elf secondary-outputs
 
 # Tool invocations
-bare_metal_Appli.elf bare_metal_Appli.map: $(OBJS) $(USER_OBJS) /Users/benkempers/Developer/STM32CubeIDE/STM32H7_BareMetal/bare_metal/Appli/STM32H7S3L8HX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "bare_metal_Appli.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"/Users/benkempers/Developer/STM32CubeIDE/STM32H7_BareMetal/bare_metal/Appli/STM32H7S3L8HX_FLASH.ld" --specs=nosys.specs -Wl,-Map="bare_metal_Appli.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+bare_metal_Boot.elf bare_metal_Boot.map: $(OBJS) $(USER_OBJS) /Users/benkempers/Developer/STM32CubeIDE/STM32H7_BareMetal/bare_metal/Boot/STM32H7S3L8HX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "bare_metal_Boot.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"/Users/benkempers/Developer/STM32CubeIDE/STM32H7_BareMetal/bare_metal/Boot/STM32H7S3L8HX_FLASH.ld" --specs=nosys.specs -Wl,-Map="bare_metal_Boot.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -69,14 +69,14 @@ default.size.stdout: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-bare_metal_Appli.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "bare_metal_Appli.list"
+bare_metal_Boot.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "bare_metal_Boot.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) bare_metal_Appli.elf bare_metal_Appli.list bare_metal_Appli.map default.size.stdout
+	-$(RM) bare_metal_Boot.elf bare_metal_Boot.list bare_metal_Boot.map default.size.stdout
 	-@echo ' '
 
 secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)
