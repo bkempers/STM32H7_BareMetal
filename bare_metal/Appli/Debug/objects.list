@@ -1,4 +1,7 @@
+"./Src/adc.o"
+"./Src/led_driver.o"
 "./Src/main.o"
 "./Src/syscalls.o"
 "./Src/sysmem.o"
+"./Src/uart_driver.o"
 "./Startup/startup_stm32h7s3l8hx.o"

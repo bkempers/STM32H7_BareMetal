@@ -5,19 +5,28 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../Src/adc.c \
+../Src/led_driver.c \
 ../Src/main.c \
 ../Src/syscalls.c \
-../Src/sysmem.c 
+../Src/sysmem.c \
+../Src/uart_driver.c 
 
 OBJS += \
+./Src/adc.o \
+./Src/led_driver.o \
 ./Src/main.o \
 ./Src/syscalls.o \
-./Src/sysmem.o 
+./Src/sysmem.o \
+./Src/uart_driver.o 
 
 C_DEPS += \
+./Src/adc.d \
+./Src/led_driver.d \
 ./Src/main.d \
 ./Src/syscalls.d \
-./Src/sysmem.d 
+./Src/sysmem.d \
+./Src/uart_driver.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
@@ -27,7 +36,7 @@ Src/%.o Src/%.su Src/%.cyclo: ../Src/%.c Src/subdir.mk
 clean: clean-Src
 
 clean-Src:
-	-$(RM) ./Src/main.cyclo ./Src/main.d ./Src/main.o ./Src/main.su ./Src/syscalls.cyclo ./Src/syscalls.d ./Src/syscalls.o ./Src/syscalls.su ./Src/sysmem.cyclo ./Src/sysmem.d ./Src/sysmem.o ./Src/sysmem.su
+	-$(RM) ./Src/adc.cyclo ./Src/adc.d ./Src/adc.o ./Src/adc.su ./Src/led_driver.cyclo ./Src/led_driver.d ./Src/led_driver.o ./Src/led_driver.su ./Src/main.cyclo ./Src/main.d ./Src/main.o ./Src/main.su ./Src/syscalls.cyclo ./Src/syscalls.d ./Src/syscalls.o ./Src/syscalls.su ./Src/sysmem.cyclo ./Src/sysmem.d ./Src/sysmem.o ./Src/sysmem.su ./Src/uart_driver.cyclo ./Src/uart_driver.d ./Src/uart_driver.o ./Src/uart_driver.su
 
 .PHONY: clean-Src
 
