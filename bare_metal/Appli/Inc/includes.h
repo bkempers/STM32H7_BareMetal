@@ -15,6 +15,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+#define SYS_FREQ 64000000
+
 #define GPIOAEN               (1U<<0)
 #define GPIOBEN               (1U<<1)
 #define GPIOCEN               (1U<<2)
@@ -35,7 +37,6 @@
 
 /* UART DEFINES */
 
-#define SYS_FREQ 64000000
 #define ABP1_CLK SYS_FREQ
 
 #define UART_BAUDRATE 115200
@@ -64,5 +65,11 @@
 
 #define ADC_CFGR_CONT           (1U<<13)
 
+/* SYSTICK DEFINES */
+
+#define SYSTICK_LOAD_VAL        64000
+#define SYSTICK_CR_EN           (1U<<0)
+#define SYSTICK_CR_CLK_SRC      (1U<<2)
+#define SYSTICK_CR_COUNTFLAG    (1U<<16)
 
 #endif /* INCLUDES_H_ */

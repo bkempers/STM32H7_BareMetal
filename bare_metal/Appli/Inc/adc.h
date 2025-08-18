@@ -15,4 +15,6 @@ void start_conversion();
 
 uint32_t adc_read();
 
+void adc_driver();
+
 #endif /* ADC_H_ */

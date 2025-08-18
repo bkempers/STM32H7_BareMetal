@@ -57,3 +57,19 @@ uint32_t adc_read(void)
 	/* read converted result */
 	return (ADC1->DR);
 }
+
+void adc_driver(void)
+{
+	led_init();
+	usart_rxtx_init();
+
+	pa4_adc_init();
+	start_conversion();
+
+	while(true)
+	{
+		uint32_t sensor_value = adc_read();
+		printf("Sensor value : %d \n\r", (int)sensor_value);
+		led_toggle(1);
+	}
+}
