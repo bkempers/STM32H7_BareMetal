@@ -7,32 +7,6 @@
 
 #include "uart_driver.h"
 
-/* LED DEBUG */
-
-void led_init(void)
-{
-    // Enable GPIO clocks
-    RCC->AHB4ENR |= GPIOBEN | GPIODEN;
-
-    // Configure LED pins as outputs
-    // LED1 (PD10) and LED2 (PD13)
-    GPIOD->MODER |= (1U<<20) | (1U<<26);  // Set bits for output mode
-    GPIOD->MODER &= ~((1U<<21) | (1U<<27)); // Clear upper bits
-
-    // LED3 (PB7)
-    GPIOB->MODER |= (1U<<14);   // Set bit for output mode
-    GPIOB->MODER &= ~(1U<<15);  // Clear upper bit
-}
-
-void led_toggle(int led_num)
-{
-    switch(led_num) {
-        case 1: GPIOD->ODR ^= LED1_PIN; break;  // Green
-        case 2: GPIOD->ODR ^= LED2_PIN; break;  // Yellow
-        case 3: GPIOB->ODR ^= LED3_PIN; break;  // Red
-    }
-}
-
 /* UART DRIVER */
 
 void usart_rxtx_init(void)
@@ -40,9 +14,6 @@ void usart_rxtx_init(void)
 	/* configure GPIO pin */
 	// enable clock access
 	RCC->AHB4ENR |= GPIODEN;
-
-    // LED indication: Starting UART init
-    led_toggle(1); // Green LED on
 
     /* TX Enable for USART3 GPIO */
     // set PD8 to alternate function
@@ -66,9 +37,6 @@ void usart_rxtx_init(void)
 	// enable clock access to UART3
 	RCC->APB1ENR1 |= USART3EN;
 
-	// LED indication: UART clocks enabled
-	led_toggle(2); // Yellow LED on
-
 	// configure baudrate
 	uart_set_baudrate(USART3, ABP1_CLK, UART_BAUDRATE);
 
@@ -77,17 +45,6 @@ void usart_rxtx_init(void)
 	// enable uart module
 	USART3->CR1 |= CR1_UE;
 
-	// LED indication: UART fully configured
-	led_toggle(3); // Red LED on
-
-	for(int i =0; i<1000000; i++) {}
-
-	// Turn LED off
-	led_toggle(1);
-	for(int i =0; i<1000000; i++) {}
-	led_toggle(2);
-	for(int i =0; i<1000000; i++) {}
-	led_toggle(3);
 	for(int i =0; i<1000000; i++) {}
 }
 

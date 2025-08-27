@@ -4,5 +4,6 @@
 "./Src/syscalls.o"
 "./Src/sysmem.o"
 "./Src/systick.o"
+"./Src/timer.o"
 "./Src/uart_driver.o"
 "./Startup/startup_stm32h7s3l8hx.o"

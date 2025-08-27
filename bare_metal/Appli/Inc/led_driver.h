@@ -10,6 +10,8 @@
 
 #include "includes.h"
 
+void led_init(void);
+void led_toggle(int led_num);
 void run_gpio_led(bool button);
 
 #endif /* LED_DRIVER_H_ */

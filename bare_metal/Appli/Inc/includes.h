@@ -72,4 +72,24 @@
 #define SYSTICK_CR_CLK_SRC      (1U<<2)
 #define SYSTICK_CR_COUNTFLAG    (1U<<16)
 
+/* TIMER DEFINES */
+
+#define TIM1_EN                 (1U<<0)
+#define TIM2_EN                 (1U<<0)
+#define TIM4_EN                 (1U<<0)
+
+#define TIMx_CR1_CEN            (1U<<0)
+#define TIMx_SR_UIF             (1U<<0)
+
+#define TIMx_CCMR2_OC4M         (1U<<12) | (1U<<13)
+#define TIMx_CCER_CC4E          (1U<<12)
+
+#define TIMx_CCMR1_CC1S         (1U<<8)
+#define TIMx_CCER_CC2E          (1U<<4)
+
+#define AFR10_TIM1              (1U<<8)
+#define AFR13_TIM4              (1U<<21)
+#define TIMx_SR_CC2IF           (1U<<2)
+
+
 #endif /* INCLUDES_H_ */

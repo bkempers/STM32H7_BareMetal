@@ -8,6 +8,30 @@
 #include "led_driver.h"
 
 
+void led_init(void)
+{
+    // Enable GPIO clocks
+    RCC->AHB4ENR |= GPIOBEN | GPIODEN;
+
+    // Configure LED pins as outputs
+    // LED1 (PD10) and LED2 (PD13)
+    GPIOD->MODER |= (1U<<20) | (1U<<26);  // Set bits for output mode
+    GPIOD->MODER &= ~((1U<<21) | (1U<<27)); // Clear upper bits
+
+    // LED3 (PB7)
+    GPIOB->MODER |= (1U<<14);   // Set bit for output mode
+    GPIOB->MODER &= ~(1U<<15);  // Clear upper bit
+}
+
+void led_toggle(int led_num)
+{
+    switch(led_num) {
+        case 1: GPIOD->ODR ^= LED1_PIN; break;  // Green
+        case 2: GPIOD->ODR ^= LED2_PIN; break;  // Yellow
+        case 3: GPIOB->ODR ^= LED3_PIN; break;  // Red
+    }
+}
+
 void run_gpio_led(bool button)
 {
 	/* enable clock access for gpio */
