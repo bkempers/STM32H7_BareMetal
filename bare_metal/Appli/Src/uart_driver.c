@@ -9,6 +9,82 @@
 
 /* UART DRIVER */
 
+void usart_rxtx_interrupt_init(void)
+{
+	/* configure GPIO pin */
+	// enable clock access
+	RCC->AHB4ENR |= GPIODEN;
+
+    /* TX Enable for USART3 GPIO */
+    // set PD8 to alternate function
+	GPIOD->MODER &=~ (1U<<16); //set bit 16 to 0
+	GPIOD->MODER |= (1U<<17); //set bit 17 to 1
+
+	// set PD8 to alternate function type UART_TX AF7 (0111)
+	GPIOD->AFR[1] &= ~(0xF<<0);  // Clear bits first
+	GPIOD->AFR[1] |= (7U<<0);    // Set AF7
+
+	/* RX Enable for USART3 GPIO */
+    // set PD9 to alternate function
+	GPIOD->MODER &=~ (1U<<18); //set bit 18 to 0
+	GPIOD->MODER |= (1U<<19); //set bit 19 to 1
+
+	// set PD9 to alternate function type UART_RX AF7 (0111)
+	GPIOD->AFR[1] &= ~(0xF<<4);  // Clear bits first
+	GPIOD->AFR[1] |= (7U<<4);    // Set AF7
+
+	/* configure UART module */
+	// enable clock access to UART3
+	RCC->APB1ENR1 |= USART3EN;
+
+	// configure baudrate
+	uart_set_baudrate(USART3, ABP1_CLK, UART_BAUDRATE);
+
+	// configure transfer direction
+	USART3->CR1 = CR1_FIFOEN_DISABLE | CR1_TE | CR1_RE;
+
+	/* enable RXNE interrupt */
+	USART3->CR1 |= CR1_RXNEIE;
+
+	/* ENABLE USART3 interrupt in NVIC */
+	__NVIC_EnableIRQ(USART3_IRQn);
+
+	// enable uart module
+	USART3->CR1 |= CR1_UE;
+
+	for(int i =0; i<1000000; i++) {}
+}
+
+static void uart_callback(void)
+{
+	char key = USART3->RDR;
+
+	if (key == '1') {
+		led_toggle(1);
+	} else {
+		led_toggle(2);
+	}
+}
+
+void USART3_IRQHandler(void)
+{
+	if(USART3->ISR & ISR_ALT_RXNE)
+	{
+		uart_callback();
+	}
+}
+
+void uart_interrupt_driver()
+{
+    led_init();
+    usart_rxtx_interrupt_init();
+
+    while(1)
+    {
+
+    }
+}
+
 void usart_rxtx_init(void)
 {
 	/* configure GPIO pin */
@@ -42,6 +118,7 @@ void usart_rxtx_init(void)
 
 	// configure transfer direction
 	USART3->CR1 = CR1_FIFOEN_DISABLE | CR1_TE | CR1_RE;
+
 	// enable uart module
 	USART3->CR1 |= CR1_UE;
 

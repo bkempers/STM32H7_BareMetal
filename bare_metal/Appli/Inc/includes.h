@@ -45,6 +45,7 @@
 #define CR1_TE                (1U<<3)
 #define CR1_RE                (1U<<2)
 #define CR1_UE                (1U<<0)
+#define CR1_RXNEIE            (1U<<5)
 
 #define ISR_ALT_RXNE           (1U<<5)
 #define ISR_ALT_TXE            (1U<<7)
@@ -65,12 +66,15 @@
 
 #define ADC_CFGR_CONT           (1U<<13)
 
+#define ADC_IER_EOCIE           (1U<<2)
+
 /* SYSTICK DEFINES */
 
 #define SYSTICK_LOAD_VAL        64000
 #define SYSTICK_CR_EN           (1U<<0)
 #define SYSTICK_CR_CLK_SRC      (1U<<2)
 #define SYSTICK_CR_COUNTFLAG    (1U<<16)
+#define SYSTICK_TICKINT         (1U<<1)
 
 /* TIMER DEFINES */
 
@@ -91,5 +95,11 @@
 #define AFR13_TIM4              (1U<<21)
 #define TIMx_SR_CC2IF           (1U<<2)
 
+#define TIMx_DIER_UIE           (1U<<0)
+
+
+/* INTERRUPTS DEFINES */
+#define APB4ENR_SBSEN            (1U<<1)
+#define LINE_13                  (1U<<13)
 
 #endif /* INCLUDES_H_ */

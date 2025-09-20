@@ -29,12 +29,16 @@ static void uart_set_baudrate(USART_TypeDef *USARTx, uint32_t PeriphClk, uint32_
 }
 
 void usart_rxtx_init(void);
+void usart_rxtx_interrupt_init(void);
 char uart3_read(void);
 void uart3_write(int ch);
 
 int __io_putchar(int ch);
 
+void USART3_IRQHandler(void);
+
 void uart_driver(int ch);
+void uart_interrupt_driver();
 
 
 #endif /* UART_DRIVER_H_ */

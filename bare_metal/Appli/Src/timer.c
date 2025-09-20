@@ -8,6 +8,59 @@
 
 #include "timer.h"
 
+void tim2_1hz_interrupt_init()
+{
+	/* enable clock access */
+	RCC->APB1ENR1 |= TIM2_EN;
+
+	/* set prescaler */
+	TIM2->PSC = 6400 - 1; // 64 000 000 / 6400
+
+	/* set auto-reload value */
+	TIM2->ARR = 10000 - 1;
+
+	/* clear counter */
+	TIM2->CNT = 0;
+
+	/* enable timer */
+	TIM2->CR1 = TIMx_CR1_CEN;
+
+	/* enable TIM interrupt */
+	TIM2->DIER = TIMx_DIER_UIE;
+
+	/* enable TIM interrupt in NVIC */
+	__NVIC_EnableIRQ(TIM2_IRQn);
+}
+
+void TIM2_IRQHandler()
+{
+	/* reset UIF */
+	TIM2->SR &=~  TIMx_SR_UIF;
+
+	tim2_callback();
+}
+
+void tim2_callback()
+{
+	printf("1 second\n\r");
+	led_toggle(1);
+}
+
+void timx_interrupt_driver()
+{
+	led_init();
+	usart_rxtx_init();
+
+	printf("Starting timer interrupt driver.\n\r");
+
+	tim2_1hz_interrupt_init();
+
+	while(true)
+	{
+
+	}
+}
+
 void tim2_1hz_init()
 {
 	/* enable clock access */

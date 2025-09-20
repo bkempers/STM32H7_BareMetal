@@ -11,10 +11,15 @@
 #include "includes.h"
 
 void pa4_adc_init();
+
+void pa4_adc_interrupt_init();
+void ADC_IRQHandler();
+
 void start_conversion();
 
 uint32_t adc_read();
 
 void adc_driver();
+void adc_inerrupt_driver();
 
 #endif /* ADC_H_ */

@@ -1,4 +1,5 @@
 "./Src/adc.o"
+"./Src/exti.o"
 "./Src/led_driver.o"
 "./Src/main.o"
 "./Src/syscalls.o"
