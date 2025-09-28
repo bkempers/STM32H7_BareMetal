@@ -40,5 +40,11 @@ void USART3_IRQHandler(void);
 void uart_driver(int ch);
 void uart_interrupt_driver();
 
+/* GPDMA section */
+
+void gpdma1_usart3_init(uint32_t src, uint32_t dst, uint32_t len);
+void GPDMA1_CH0_IRQHandler(void);
+void usart_dma_driver();
+
 
 #endif /* UART_DRIVER_H_ */

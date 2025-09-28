@@ -52,6 +52,43 @@
 
 #define USART3EN               (1U<<18)
 
+/* GPDMA DEFINES */
+
+#define GPDMA1EN           (1U<<4)
+
+#define GPDMA1_CCR_EN      (1U<<0)
+#define GPDMA1_CCR_TCIE    (1U<<8)
+#define GPDMA1_CCR_HTIE    (1U<<9)
+#define GPDMA1_CCR_DTEIE   (1U<<10)
+#define GPDMA1_CCR_USEIE   (1U<<12)
+
+#define GPDMA1_CTR1_SDW_MASK    (0x3U << 0)   // Source data width (bits 1:0)
+#define GPDMA1_CTR1_DDW_MASK    (0x3U << 16)  // Dest data width (bits 17:16)
+#define GPDMA1_CRT1_DINC    (1U<<19)
+#define GPDMA1_CTR1_SINC    (1U<<3)
+
+#define GPDMA1_CTR2_DREQ    (1U<<10)
+#define GPDMA1_CTR2_PFREQ   (1U<<12)
+#define GPDMA1_CTR2_REQSEL_MASK (0x7FU << 0)
+
+#define GPDMA1_CSR_TCF     (1U<<8)
+#define GPDMA1_CFCR_TCF    (1U<<8)
+
+#define USART_CR3_DMAT     (1U<<7)
+
+// interrupts
+// All clear flags
+#define GPDMA_CFCR_ALL_FLAGS    (0x7F << 8)
+
+#define GPDMA_CFCR_TCF0       (1U<<8)
+#define GPDMA_CFCR_HTF0       (1U<<9)
+#define GPDMA_CFCR_DTEF0      (1U<<10)
+#define GPDMA_CFCR_ULEF0      (1U<<11)
+#define GPDMA_CFCR_USEF0      (1U<<12)
+#define GPDMA_CFCR_SUSPF0     (1U<<13)
+#define GPDMA_CFCR_TOF0       (1U<<14)
+
+
 /* ADC DEFINES */
 
 #define ADC12EN                 (1U<<5)

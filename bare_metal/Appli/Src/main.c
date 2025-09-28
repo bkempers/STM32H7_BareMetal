@@ -24,7 +24,9 @@ int main(void)
 	//uart_interrupt_driver();
 	//adc_inerrupt_driver();
 	//systick_interrupt_driver();
-	timx_interrupt_driver();
+	//timx_interrupt_driver();
+
+	usart_dma_driver();
 
 	return 1;
 }
